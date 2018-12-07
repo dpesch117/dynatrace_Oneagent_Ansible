@@ -1,0 +1,34 @@
+#This Ansible script is designed to install the latest version of Dynatrace's OneAgent.
+#The OneAgent will come Pre-installed to the specified environment in the 'oneagent_installer_script_url:' variable.
+#This script is designed to create the Linux user 'dtuser' with group '1010' 
+#After the agent has been installed it will update the hostautotag.conf file with the application and environment defined.
+#If the server has a previous version of the OneAgent please run the OneAgent_Uninstall.yml beforehand
+---
+- hosts: serverList
+  vars_files:
+    - /home/c114784_dp/ansibletest/playbooks/external_vars.yml  
+  vars:  
+#Link to download the Dyantrace OneAgent
+    oneagent_installer_script_url: https://{{serverIP}}/e/{{environmentID}}/api/v1/deployment/installer/agent/unix/default/latest?Api-Token={{apiToken}}&arch=x86&flavor=default
+
+  tasks:
+#Downloads the Dynatrace OneAgent
+  - name: "Download Dynatrace OneAgent"
+    get_url:
+      url: "{{ oneagent_installer_script_url }}"
+      dest: "/opt/dynatrace/dynatrace-oneagent.sh"
+      validate_certs: no
+      
+#Install the Dynatrace Oneagent with settings defined in external_vars.yml
+  - name: "Install Dynatrace OneAgent"
+    shell: "sh /opt/dynatrace/dynatrace-oneagent.sh APP_LOG_CONTENT_ACCESS=1 INFRA_ONLY={{infraOnly}} USER={{dynatraceUser}} GROUP={{userGroup}} HOST_GROUP={{Host_Group}}"
+    
+#update the hostautotag.conf file with application and environment tag
+  - name: "Update Hostautotag.conf file"
+    lineinfile:
+      dest: /var/lib/dynatrace/oneagent/agent/config/hostautotag.conf
+      line: application={{Host_Group}} environment={{env}}
+  
+
+    
+    

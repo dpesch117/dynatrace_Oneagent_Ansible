@@ -1,0 +1,17 @@
+#Separate file for variables which are needed for the installation process.
+---
+#Dynatrace Server hostname or IP address. If downloading through an activeGate please use the activegate IPaddress:9999
+serverIP: abc   
+#environment ID for the 
+environmentID: def
+#API token found in the Dynatrace "Deploy Dynatrace" section
+apiToken: hij
+#application name
+application: klm
+#environment Name (ie, shared, uat, perf, prod)
+env: nop
+#Specify Dynatrace user (dtuser is default)
+dynatraceUser: dtuser
+#Specify a Linux user group for dynatraceUser 
+userGroup: xxxx
+  
