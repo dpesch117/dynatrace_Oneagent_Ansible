@@ -1,6 +1,6 @@
 #This Ansible script is designed to install the latest version of Dynatrace's OneAgent.
 #The OneAgent will come Pre-installed to the specified environment in the 'oneagent_installer_script_url:' variable.
-#This script is designed to create the Linux user 'dtuser' with group '1010' 
+#This script is designed to create the Linux user 'dtuser' with group 'dtuser' 
 #After the agent has been installed it will update the hostautotag.conf file with the application and environment defined.
 #If the server has a previous version of the OneAgent please run the OneAgent_Uninstall.yml beforehand
 ---
